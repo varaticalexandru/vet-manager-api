@@ -3,7 +3,6 @@ package org.alexv.vet_manager_api.appointment.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.alexv.vet_manager_api.appointment.domain.repository.AppointmentJpaRepository;
 import org.alexv.vet_manager_api.doctor.domain.entity.Doctor;
 import org.alexv.vet_manager_api.pet.domain.entity.Pet;
 import org.alexv.vet_manager_api.service.domain.entity.Service;

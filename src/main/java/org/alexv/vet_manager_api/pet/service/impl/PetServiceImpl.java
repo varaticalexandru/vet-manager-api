@@ -3,8 +3,6 @@ package org.alexv.vet_manager_api.pet.service.impl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.alexv.vet_manager_api.appointment.domain.entity.Appointment;
-import org.alexv.vet_manager_api.appointment.domain.repository.AppointmentJpaRepository;
 import org.alexv.vet_manager_api.pet.domain.entity.Pet;
 import org.alexv.vet_manager_api.pet.domain.repository.PetJpaRepository;
 import org.alexv.vet_manager_api.pet.service.PetService;

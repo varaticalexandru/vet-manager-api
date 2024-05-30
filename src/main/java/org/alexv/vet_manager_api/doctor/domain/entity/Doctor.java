@@ -3,10 +3,8 @@ package org.alexv.vet_manager_api.doctor.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.alexv.vet_manager_api.appointment.domain.entity.Appointment;
 
 import java.time.Instant;
-import java.util.List;
 
 @Entity
 @Table(name = "doctor")
