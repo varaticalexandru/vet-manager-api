@@ -3,11 +3,11 @@ package org.alexv.vet_manager_api.commons.mapper;
 import java.util.List;
 
 public interface Mapper<A, B> {
-    B mapTo(A a);
+    B toDTO(A a);
 
-    A mapFrom(B b);
+    A toEntity(B b);
 
-    List<B> mapTo(List<A> a);
+    List<B> toDTO(List<A> a);
 
-    List<A> mapFrom(List<B> b);
+    List<A> toEntity(List<B> b);
 }

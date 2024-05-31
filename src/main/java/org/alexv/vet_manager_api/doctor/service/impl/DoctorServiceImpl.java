@@ -24,7 +24,7 @@ public class DoctorServiceImpl implements DoctorService {
                         repository
                                 .findAll()
                                 .stream()
-                                .map(doctorMapper::mapTo)
+                                .map(doctorMapper::toDTO)
                                 .toList())
 
                 .build();

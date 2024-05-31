@@ -25,4 +25,5 @@ public class AppointmentDTO {
     AppointmentStatus status;
     DoctorDTO doctor;
     List<ServiceDTO> services = new ArrayList<>();
+    Double totalCost;
 }

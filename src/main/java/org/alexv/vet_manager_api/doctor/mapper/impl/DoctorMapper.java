@@ -19,17 +19,17 @@ public class DoctorMapper implements Mapper<Doctor, DoctorDTO> {
     ModelMapper modelMapper;
 
     @Override
-    public DoctorDTO mapTo(Doctor doctor) {
+    public DoctorDTO toDTO(Doctor doctor) {
         return modelMapper.map(doctor, DoctorDTO.class);
     }
 
     @Override
-    public Doctor mapFrom(DoctorDTO doctorDTO) {
+    public Doctor toEntity(DoctorDTO doctorDTO) {
         return modelMapper.map(doctorDTO, Doctor.class);
     }
 
     @Override
-    public List<DoctorDTO> mapTo(List<Doctor> a) {
+    public List<DoctorDTO> toDTO(List<Doctor> a) {
         return a
                 .stream()
                 .map(doctor -> modelMapper.map(doctor, DoctorDTO.class))
@@ -37,7 +37,7 @@ public class DoctorMapper implements Mapper<Doctor, DoctorDTO> {
     }
 
     @Override
-    public List<Doctor> mapFrom(List<DoctorDTO> b) {
+    public List<Doctor> toEntity(List<DoctorDTO> b) {
         return b
                 .stream()
                 .map(doctorDTO -> modelMapper.map(doctorDTO, Doctor.class))

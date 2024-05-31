@@ -24,7 +24,7 @@ public class PetServiceImpl implements PetService {
                         repository
                                 .findAll()
                                 .stream()
-                                .map(petMapper::mapTo)
+                                .map(petMapper::toDTO)
                                 .toList())
                 .build();
     }

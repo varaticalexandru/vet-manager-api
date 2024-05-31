@@ -19,17 +19,17 @@ public class PetMapper implements Mapper<Pet, PetDTO> {
     ModelMapper modelMapper;
 
     @Override
-    public PetDTO mapTo(Pet pet) {
+    public PetDTO toDTO(Pet pet) {
         return modelMapper.map(pet, PetDTO.class);
     }
 
     @Override
-    public Pet mapFrom(PetDTO petDTO) {
+    public Pet toEntity(PetDTO petDTO) {
         return modelMapper.map(petDTO, Pet.class);
     }
 
     @Override
-    public List<PetDTO> mapTo(List<Pet> a) {
+    public List<PetDTO> toDTO(List<Pet> a) {
         return a
                 .stream()
                 .map(pet -> modelMapper.map(pet, PetDTO.class))
@@ -37,7 +37,7 @@ public class PetMapper implements Mapper<Pet, PetDTO> {
     }
 
     @Override
-    public List<Pet> mapFrom(List<PetDTO> b) {
+    public List<Pet> toEntity(List<PetDTO> b) {
         return b
                 .stream()
                 .map(petDTO -> modelMapper.map(petDTO, Pet.class))

@@ -59,6 +59,12 @@ public class Appointment {
     @Column(name = "version", nullable = false)
     Long version;
 
+    @Transient
+    public Double getTotalCost() {
+        return services.stream()
+                .mapToDouble(service -> service.getPrice().getCost())
+                .sum();
+    }
 
 
     @PrePersist

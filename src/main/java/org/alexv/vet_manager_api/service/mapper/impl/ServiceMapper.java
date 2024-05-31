@@ -19,17 +19,17 @@ public class ServiceMapper implements Mapper<Service, ServiceDTO> {
     ModelMapper modelMapper;
 
     @Override
-    public ServiceDTO mapTo(Service service) {
+    public ServiceDTO toDTO(Service service) {
         return modelMapper.map(service, ServiceDTO.class);
     }
 
     @Override
-    public Service mapFrom(ServiceDTO serviceDTO) {
+    public Service toEntity(ServiceDTO serviceDTO) {
         return modelMapper.map(serviceDTO, Service.class);
     }
 
     @Override
-    public List<ServiceDTO> mapTo(List<Service> a) {
+    public List<ServiceDTO> toDTO(List<Service> a) {
         return a
                 .stream()
                 .map(service -> modelMapper.map(service, ServiceDTO.class))
@@ -37,7 +37,7 @@ public class ServiceMapper implements Mapper<Service, ServiceDTO> {
     }
 
     @Override
-    public List<Service> mapFrom(List<ServiceDTO> b) {
+    public List<Service> toEntity(List<ServiceDTO> b) {
         return b
                 .stream()
                 .map(serviceDTO -> modelMapper.map(serviceDTO, Service.class))

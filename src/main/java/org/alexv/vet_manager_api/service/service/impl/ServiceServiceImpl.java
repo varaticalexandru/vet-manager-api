@@ -24,7 +24,7 @@ public class ServiceServiceImpl implements ServiceService {
                         repository
                                 .findAll()
                                 .stream()
-                                .map(serviceMapper::mapTo)
+                                .map(serviceMapper::toDTO)
                                 .toList()
                 )
                 .build();
