@@ -1,9 +1,8 @@
 package org.alexv.vet_manager_api.pet.service;
 
-import org.alexv.vet_manager_api.pet.domain.entity.Pet;
+import org.alexv.vet_manager_api.pet.domain.dto.PetsDTO;
 
-import java.util.List;
 
 public interface PetService {
-    List<Pet> getAllPets();
+    PetsDTO getAllPets();
 }

@@ -1,5 +1,6 @@
 package org.alexv.vet_manager_api.appointment.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -23,7 +24,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column
+    @Column(columnDefinition = "TIMESTAMP(6) WITH TIME ZONE default CURRENT_TIMESTAMP")
     Instant date;
 
     @Column
@@ -45,6 +46,7 @@ public class Appointment {
             joinColumns = @JoinColumn(name = "appointment_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id")
     )
+    @JsonManagedReference
     List<Service> services;
 
     @Column(name = "created_at")

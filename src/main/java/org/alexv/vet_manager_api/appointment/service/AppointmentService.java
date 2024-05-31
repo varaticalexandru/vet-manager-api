@@ -1,9 +1,8 @@
 package org.alexv.vet_manager_api.appointment.service;
 
-import org.alexv.vet_manager_api.appointment.domain.entity.Appointment;
+import org.alexv.vet_manager_api.appointment.domain.dto.AppointmentsDTO;
 
-import java.util.List;
 
 public interface AppointmentService {
-    List<Appointment> getAllAppointments();
+    AppointmentsDTO getAllAppointments();
 }

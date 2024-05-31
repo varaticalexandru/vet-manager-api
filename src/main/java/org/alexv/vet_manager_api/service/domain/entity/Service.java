@@ -1,5 +1,6 @@
 package org.alexv.vet_manager_api.service.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -27,7 +28,8 @@ public class Service {
     @Embedded
     Price price;
 
-    @ManyToMany(mappedBy = "services")
+    @ManyToMany(mappedBy = "services", fetch = FetchType.LAZY)
+    @JsonBackReference
     List<Appointment> appointments;
 
     @Column(name = "created_at")
