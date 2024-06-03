@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.alexv.vet_manager_api.appointment.domain.entity.Appointment;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
 import java.util.List;
@@ -41,6 +42,11 @@ public class Service {
     @Version
     @Column(name = "version", nullable = false)
     Long version;
+
+    public Service(String name, Price price) {
+        this.name = name;
+        this.price = price;
+    }
 
     public boolean isTransient() {
         return version == null;

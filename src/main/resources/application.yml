@@ -19,3 +19,6 @@ spring:
 
 server:
   port: 8000
+
+properties:
+  currency: RON
