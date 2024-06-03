@@ -3,7 +3,9 @@ package org.alexv.vet_manager_api.appointment.controller;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.alexv.vet_manager_api.appointment.domain.dto.NewAppointmentDTO;
 import org.alexv.vet_manager_api.appointment.domain.dto.AppointmentDTO;
+import org.alexv.vet_manager_api.appointment.domain.dto.AppointmentUpdateDTO;
 import org.alexv.vet_manager_api.appointment.domain.dto.AppointmentsDTO;
 import org.alexv.vet_manager_api.appointment.domain.entity.Appointment;
 import org.alexv.vet_manager_api.appointment.domain.repository.specification.AppointmentSpecification;
@@ -71,8 +73,15 @@ public class AppointmentController {
     @PutMapping("/{id}")
     public AppointmentDTO updateAppointment(
             @PathVariable Long id,
-            @RequestBody AppointmentDTO appointmentDTO) {
+            @RequestBody AppointmentUpdateDTO appointmentDTO) {
         return appointmentService.updateAppointment(id, appointmentDTO);
+    }
+
+    @PostMapping
+    public AppointmentDTO addAppointment(
+            @RequestBody NewAppointmentDTO appointmentDTO
+    ) {
+        return appointmentService.addAppointment(appointmentDTO);
     }
 
 

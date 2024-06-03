@@ -69,9 +69,9 @@ public class Appointment {
 
     @PrePersist
     private void onCreate() {
-//        if (status == null) {
-//            status = AppointmentStatus.CREATED;
-//        }
+        if (status == null) {
+            status = AppointmentStatus.CREATED;
+        }
 
         if (date == null) {
             date = Instant.now();
