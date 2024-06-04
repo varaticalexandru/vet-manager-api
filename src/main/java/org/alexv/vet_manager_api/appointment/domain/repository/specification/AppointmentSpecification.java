@@ -50,14 +50,14 @@ public class AppointmentSpecification {
 
     public static Specification<Appointment> filterByDiagnostic(String diagnostic) {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.like(criteriaBuilder.lower(root.get("diagnosis")), "%" + diagnostic.toLowerCase() + "%");
+                criteriaBuilder.like(criteriaBuilder.lower(root.get("diagnostic")), "%" + diagnostic.toLowerCase() + "%");
     }
 
     public static Specification<Appointment> filterByTotalCost(Double totalCost) {
         return (root, query, criteriaBuilder) -> {
-            Join<Appointment, Service> services = root.join("services");
             query.groupBy(root.get("id"));
-            return criteriaBuilder.equal(criteriaBuilder.sum(services.get("price").get("cost")), totalCost);
+            query.having(criteriaBuilder.equal(criteriaBuilder.sum(root.join("services").get("price").get("cost")), totalCost));
+            return query.getRestriction();
         };
     }
 }
