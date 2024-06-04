@@ -8,6 +8,7 @@
 ![class_diagram drawio](https://github.com/varaticalexandru/vet-manager-api/assets/93095157/17364b09-e55f-41c8-93ee-a78ce8337ff2)
 
 ## **OpenAPI Definition**
-[HTML documentation URL](http://localhost:8000/swagger-ui/index.html)
+HTML documentation URL: http://localhost:8000/swagger-ui/index.html
+
 ![localhost_8000_swagger-ui_index html](https://github.com/varaticalexandru/vet-manager-api/assets/93095157/4cbd605f-2fdd-481a-845b-b5a84b65c01f)
 
