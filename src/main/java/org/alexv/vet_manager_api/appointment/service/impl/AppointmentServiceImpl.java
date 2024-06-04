@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.alexv.vet_manager_api.appointment.domain.dto.NewAppointmentDTO;
 import org.alexv.vet_manager_api.appointment.domain.dto.AppointmentDTO;
-import org.alexv.vet_manager_api.appointment.domain.dto.AppointmentUpdateDTO;
+import org.alexv.vet_manager_api.appointment.domain.dto.UpdAppointmentDTO;
 import org.alexv.vet_manager_api.appointment.domain.dto.AppointmentsDTO;
 import org.alexv.vet_manager_api.appointment.domain.entity.Appointment;
 import org.alexv.vet_manager_api.appointment.domain.repository.AppointmentJpaRepository;
@@ -86,31 +86,83 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     @Transactional
-    public AppointmentDTO updateAppointment(Long id, AppointmentUpdateDTO appointmentDTO) {
+    public AppointmentDTO updateAppointment(Long id, UpdAppointmentDTO appointmentDTO) {
 
-//        appointmentDTO.setId(id);
-//
-//        Appointment appointment = appointmentJpaRepository.findById(id)
-//                .orElseThrow(() -> new IllegalArgumentException("Appointment not found with id " + id));
-//
-//        Pet pet = petJpaRepository.findByName(appointmentDTO.getPetName())
-//                .orElseThrow(() -> new ResourceNotFoundException("Pet not found with name " + appointmentDTO.getPet().getName()));
-//        appointment.setPet(pet);
-//
-//        Doctor doctor = doctorJpaRepository.findByFirstNameAndLastName(appointmentDTO.get, appointmentRequestDTO.getDoctorLastName())
-//                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with name " + appointmentRequestDTO.getDoctorFirstName() + " " + appointmentRequestDTO.getDoctorLastName()));
-//        appointment.setDoctor(doctor);
-//
-//        appointment.setDate(appointmentRequestDTO.getDate());
-//        appointment.setDiagnostic(appointmentRequestDTO.getDiagnostic());
-//        appointment.setStatus(appointmentRequestDTO.getStatus());
+        appointmentDTO.setId(id);
 
-        // TODO: update services
+        Pet pet;
+        Doctor doctor;
+        List<org.alexv.vet_manager_api.service.domain.entity.Service> allServices = new ArrayList<>();
 
-//        Appointment updatedAppointment = appointmentJpaRepository.save(appointment);
-//        return appointmentMapper.toDTO(updatedAppointment);
+        Appointment appointment = appointmentJpaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id " + id));
 
-        return null;
+        if (appointmentDTO.getNewPet() != null && appointmentDTO.getNewPet()) {
+            String newPetName = (String) appointmentDTO.getPet();
+            pet = new Pet();
+            pet.setName(newPetName);
+            pet = petJpaRepository.save(pet);
+        } else {
+            Long existingPetId = Long.valueOf((Integer) appointmentDTO.getPet());
+            pet = petJpaRepository.findById(existingPetId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Pet not found with id " + existingPetId));
+        }
+
+        if (appointmentDTO.getNewDoctor() != null && appointmentDTO.getNewDoctor()) {
+            String[] nameParts = NameUtils.splitFullName((String) appointmentDTO.getDoctor());
+            String doctorFirstName = nameParts[0];
+            String doctorLastName = nameParts[1];
+            doctor = new Doctor();
+            doctor.setFirstName(doctorFirstName);
+            doctor.setLastName(doctorLastName);
+            doctor = doctorJpaRepository.save(doctor);
+        } else {
+            Long existingDoctorId = Long.valueOf((Integer) appointmentDTO.getDoctor());
+            doctor = doctorJpaRepository.findById(existingDoctorId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with id " + existingDoctorId));
+        }
+
+
+        List<Long> services = appointmentDTO.getServices();
+        List<NewServiceDTO> newServices = appointmentDTO.getNewServices();
+
+        if (!newServices.isEmpty()) {
+            List<org.alexv.vet_manager_api.service.domain.entity.Service> savedNewServices = newServices
+                    .stream()
+                    .map(newServiceDTO -> {
+                        Price price = new Price();
+                        price.setCurrency(Currency.valueOf(propertiesConfig.getCurrency()));
+                        price.setCost(newServiceDTO.getPrice());
+                        org.alexv.vet_manager_api.service.domain.entity.Service service = new org.alexv.vet_manager_api.service.domain.entity.Service();
+                        service.setName(newServiceDTO.getName());
+                        service.setPrice(price);
+                        return serviceJpaRepository.save(service);
+                    })
+                    .toList();
+
+            allServices.addAll(savedNewServices);
+        }
+
+        if (!services.isEmpty()) {
+            List<org.alexv.vet_manager_api.service.domain.entity.Service> serviceList = services
+                    .stream()
+                    .map(serviceId -> serviceJpaRepository.findById(serviceId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Service not found with id " + serviceId)))
+                    .toList();
+
+            allServices.addAll(serviceList);
+        }
+
+        appointment.setServices(allServices);
+        appointment.setPet(pet);
+        appointment.setDoctor(doctor);
+        appointment.setDate(appointmentDTO.getDate());
+        appointment.setDiagnostic(appointmentDTO.getDiagnostic());
+        appointment.setStatus(appointmentDTO.getStatus());
+
+        Appointment savedAppointment = appointmentJpaRepository.save(appointment);
+
+        return appointmentMapper.toDTO(savedAppointment);
     }
 
     @Override
@@ -142,7 +194,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             doctor.setLastName(doctorLastName);
             doctor = doctorJpaRepository.save(doctor);
         } else {
-            Long existingDoctorId = (Long) newAppointmentDTO.getDoctor();
+            Long existingDoctorId = Long.valueOf((Integer) newAppointmentDTO.getDoctor());
             doctor = doctorJpaRepository.findById(existingDoctorId)
                     .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with id " + existingDoctorId));
         }
@@ -191,6 +243,19 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         Appointment savedAppointment = appointmentJpaRepository.save(appointment);
         return appointmentMapper.toDTO(savedAppointment);
+    }
+
+    @Override
+    @Transactional
+    public Boolean deleteAppointment(Long id) {
+
+        Appointment appointment = appointmentJpaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id " + id));
+
+        appointment.getServices().clear();
+        appointmentJpaRepository.delete(appointment);
+
+        return true;
     }
 
 

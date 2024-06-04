@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.alexv.vet_manager_api.appointment.domain.dto.NewAppointmentDTO;
 import org.alexv.vet_manager_api.appointment.domain.dto.AppointmentDTO;
-import org.alexv.vet_manager_api.appointment.domain.dto.AppointmentUpdateDTO;
+import org.alexv.vet_manager_api.appointment.domain.dto.UpdAppointmentDTO;
 import org.alexv.vet_manager_api.appointment.domain.dto.AppointmentsDTO;
 import org.alexv.vet_manager_api.appointment.domain.entity.Appointment;
 import org.alexv.vet_manager_api.appointment.domain.repository.specification.AppointmentSpecification;
@@ -69,14 +69,6 @@ public class AppointmentController {
         return appointmentService.getAppointmentsByPageableAndSpec(spec, pageable);
     }
 
-
-    @PutMapping("/{id}")
-    public AppointmentDTO updateAppointment(
-            @PathVariable Long id,
-            @RequestBody AppointmentUpdateDTO appointmentDTO) {
-        return appointmentService.updateAppointment(id, appointmentDTO);
-    }
-
     @PostMapping
     public AppointmentDTO addAppointment(
             @RequestBody NewAppointmentDTO appointmentDTO
@@ -84,6 +76,21 @@ public class AppointmentController {
         return appointmentService.addAppointment(appointmentDTO);
     }
 
+
+    @PutMapping("/{id}")
+    public AppointmentDTO updateApoointment(
+            @PathVariable Long id,
+            @RequestBody UpdAppointmentDTO appointmentDTO
+    ) {
+        return appointmentService.updateAppointment(id, appointmentDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAppointment(
+            @PathVariable Long id
+    ) {
+        appointmentService.deleteAppointment(id);
+    }
 
 
 }
