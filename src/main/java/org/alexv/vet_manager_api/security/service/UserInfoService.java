@@ -1,8 +1,6 @@
 package org.alexv.vet_manager_api.security.service;
 
 import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.alexv.vet_manager_api.security.domain.dto.UserAddResponseDTO;
 import org.alexv.vet_manager_api.security.domain.dto.UserInfoDTO;
