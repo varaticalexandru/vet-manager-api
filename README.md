@@ -1,5 +1,12 @@
 # vet-manager-api
 
+## **App Users Credentials**
+- user1:password1
+- user2:password2
+- user3:password3
+- user4:password4
+- user5:password5
+
 ## **ER Diagram**
 ![er_diagram drawio](https://github.com/varaticalexandru/vet-manager-api/assets/93095157/d3896ef2-f53a-4ec7-b56c-07f26efaa0c5)
 
