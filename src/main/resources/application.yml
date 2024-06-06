@@ -1,4 +1,6 @@
 spring:
+  main:
+    allow-circular-references: true
   application:
     name: vet-manager-api
   jpa:
@@ -8,6 +10,12 @@ spring:
       ddl-auto: create-drop
     show-sql: true
     defer-datasource-initialization: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        types:
+          print:
+#            banner: true
   datasource:
     url: jdbc:h2:mem:vet_db;DB_CLOSE_DELAY=-1
     driver-class-name: org.h2.Driver
@@ -22,3 +30,5 @@ server:
 
 properties:
   currency: RON
+  jwt-secret: "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437"
+  jwt-expiration: 30
