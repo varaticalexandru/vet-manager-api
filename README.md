@@ -7,6 +7,13 @@
 - user4:password4
 - user5:password5
 
+## **H2 in-memory DB access**
+H2 console URL: http://localhost:8000/h2-console \
+Credentials: sa:password
+
+![localhost_8000_h2-console_login jsp_jsessionid=bcb46710983014e80c059f4b5e4499de (1)](https://github.com/varaticalexandru/vet-manager-api/assets/93095157/2641b93e-f4b4-48bc-8515-8bc576f8d680)
+
+
 ## **ER Diagram**
 ![er_diagram drawio](https://github.com/varaticalexandru/vet-manager-api/assets/93095157/d3896ef2-f53a-4ec7-b56c-07f26efaa0c5)
 
